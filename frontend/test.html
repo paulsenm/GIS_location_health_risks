@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Environmental Health Risk Explorer</title>
+
+    <!-- Load ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <style>
+      html,
+      body,
+      arcgis-map {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <arcgis-map basemap="hybrid" center="-123.03,45.04" zoom="10">
+      <arcgis-zoom slot="top-left"></arcgis-zoom>
+      <arcgis-layer-list slot="top-right"></arcgis-layer-list>
+      <arcgis-legend slot="bottom-left"></arcgis-legend>
+    </arcgis-map>
+
+    <script type="module">
+      const GeoJSONLayer = await $arcgis.import("@arcgis/core/layers/GeoJSONLayer.js");
+
+      const viewElement = document.querySelector("arcgis-map");
+
+      // Wait until the map/view is ready before adding layers
+      await viewElement.viewOnReady();
+
+      const testPointsLayer = new GeoJSONLayer({
+        url: "http://localhost:5000/test",
+        title: "Test Points",
+        popupTemplate: {
+          title: "{name}",
+          content: "This is a test point from the Flask backend."
+        },
+        renderer: {
+          type: "simple",
+          symbol: {
+            type: "simple-marker",
+            size: 12,
+            color: "red",
+            outline: {
+              color: "white",
+              width: 1
+            }
+          }
+        }
+      });
+
+      viewElement.map.add(testPointsLayer);
+
+      // Wait for the layer to load, then zoom to it
+      await viewElement.whenLayerView(testPointsLayer);
+
+      if (testPointsLayer.fullExtent) {
+        await viewElement.goTo(testPointsLayer.fullExtent.expand(2), {
+          animate: true,
+          duration: 1500
+        });
+      }
+    </script>
+  </body>
+</html>
