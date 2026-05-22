@@ -1,6 +1,8 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 
+from handle_places import get_places_oregon_test
+
 app = Flask(__name__)
 CORS(app)
 
@@ -35,6 +37,10 @@ def test_points():
             }
         ]
     })
+
+@app.route('/oregon-test')
+def oregon_test():
+    return jsonify(get_places_oregon_test())
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -36,23 +36,46 @@
       await viewElement.viewOnReady();
 
       const testPointsLayer = new GeoJSONLayer({
-        url: "http://localhost:5000/test",
-        title: "Test Points",
+        url: "http://localhost:5000/oregon-test",
+        title: "Cancer Prevelance",
         popupTemplate: {
           title: "{name}",
           content: "This is a test point from the Flask backend."
         },
         renderer: {
-          type: "simple",
-          symbol: {
-            type: "simple-marker",
-            size: 12,
-            color: "red",
-            outline: {
-              color: "white",
-              width: 1
+          type: "unique-value",
+          field: "severity_group",
+          defaultSymbol: { type: "simple-marker", color: "white"},
+          uniqueValueInfos:[
+            {
+              value: "low",
+              symbol: {
+              type: "simple-marker",
+              color: "green"
+              }
+            },
+            {
+              value: "medium",
+              symbol: {
+                type: "simple-marker",
+                color: "yellow"
+              }
+           },
+            {
+              value: "high",
+              symbol: {
+                type: "simple-marker",
+                color: "red"
+              }
+            },
+            {
+              value: "very-high",
+              symbol: {
+                type: "simple-marker",
+                color: "black"
+              }
             }
-          }
+        ]
         }
       });
 
