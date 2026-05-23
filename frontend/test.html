@@ -51,30 +51,46 @@
               value: "low",
               symbol: {
               type: "simple-marker",
-              color: "green"
+              color: [0, 220, 0, 0.0],
+                outline: {
+                  color: [0, 0, 0, 0],
+                  width: 0
+              }
               }
             },
             {
               value: "medium",
               symbol: {
                 type: "simple-marker",
-                color: "yellow"
+                color: [220, 220, 0, 0.0],
+                outline: {
+                  color: [0, 0, 0, 0],
+                  width: 0
+                }
               }
            },
             {
               value: "high",
               symbol: {
                 type: "simple-marker",
-                color: "red"
+                color: "red",
+                outline: {
+                  color: [0, 0, 0, 0],
+                  width: 0
+                }
               }
             },
             {
               value: "very-high",
               symbol: {
                 type: "simple-marker",
-                color: "black"
+                color: "black",
+                outline: {
+                  color: [0, 0, 0, 0],
+                  width: 0
               }
             }
+          }
         ]
         }
       });

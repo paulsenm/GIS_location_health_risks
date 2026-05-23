@@ -1,0 +1,10 @@
+expand points to area covered
+-get geo from TIGER shapefiles
+-associate by tract id
+
+refactor to make it easier to add new feature layers 
+
+add feature layer options from other PLACES measures
+
+add feature layer options for aqi and epa facilities
+
