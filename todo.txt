@@ -3,6 +3,8 @@ expand points to area covered
 -associate by tract id
 
 refactor to make it easier to add new feature layers 
+-add non-value removal
+-add easy way to switch between 'high = bad' and 'high = good'
 
 add feature layer options from other PLACES measures
 

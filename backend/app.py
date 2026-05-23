@@ -45,7 +45,8 @@ def oregon_test():
 @app.route('/generic-places-data')
 def get_generic_places_data():
     test_feature_string = "CANCER_CrudePrev"
-    places_points = get_PLACES_data_float(test_feature_string)
+    test_feature_string_alt = "ARTHRITIS_CrudePrev"
+    places_points = get_PLACES_data_float(test_feature_string_alt)
     points_with_hue = get_hue_from_feature_data(places_points)
     features_object = build_feature_layer_object(points_with_hue)
     return jsonify(features_object)

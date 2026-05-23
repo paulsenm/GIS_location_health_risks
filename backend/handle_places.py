@@ -17,8 +17,10 @@ def get_PLACES_data_float(layer_name):
             coords_array = coords_cleaned.split()
             coords_array[0] = float(coords_array[0])
             coords_array[1] = float(coords_array[1])
-
-            feature_value = float(row[layer_name])
+            if row[layer_name] != '':
+                feature_value = float(row[layer_name])
+            else:
+                feature_value = -1
             print(f'getting value for {layer_name}. value was {feature_value}')
 
             feature_coords_item['coords_array'] = coords_array
