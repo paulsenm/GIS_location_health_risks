@@ -42,11 +42,18 @@ def test_points():
 def oregon_test():
     return jsonify(get_places_oregon_test())
 
-@app.route('/generic-places-data')
-def get_generic_places_data():
-    test_feature_string = "CANCER_CrudePrev"
-    test_feature_string_alt = "ARTHRITIS_CrudePrev"
-    places_points = get_PLACES_data_float(test_feature_string_alt)
+@app.route('/cancer-layer')
+def get_cancer_data():
+    feature_string = "CANCER_CrudePrev"
+    places_points = get_PLACES_data_float(feature_string)
+    points_with_hue = get_hue_from_feature_data(places_points)
+    features_object = build_feature_layer_object(points_with_hue)
+    return jsonify(features_object)
+
+@app.route('/asthma-layer')
+def get_asthma_data():
+    feature_string = "CASTHMA_CrudePrev"
+    places_points = get_PLACES_data_float(feature_string)
     points_with_hue = get_hue_from_feature_data(places_points)
     features_object = build_feature_layer_object(points_with_hue)
     return jsonify(features_object)
