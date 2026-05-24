@@ -35,73 +35,92 @@
       // Wait until the map/view is ready before adding layers
       await viewElement.viewOnReady();
 
-      const testPointsLayer = new GeoJSONLayer({
-        url: "http://localhost:5000/oregon-test",
+      const cancer_layer = new GeoJSONLayer({
+        url: "http://localhost:5000/cancer-layer",
         title: "Cancer Prevelance",
         popupTemplate: {
           title: "{name}",
           content: "This is a test point from the Flask backend."
         },
         renderer: {
-          type: "unique-value",
-          field: "severity_group",
-          defaultSymbol: { type: "simple-marker", color: "white"},
-          uniqueValueInfos:[
-            {
-              value: "low",
-              symbol: {
+            type: "simple",
+            symbol: {
               type: "simple-marker",
-              color: [0, 220, 0, 0.0],
-                outline: {
-                  color: [0, 0, 0, 0],
-                  width: 0
-              }
-              }
-            },
-            {
-              value: "medium",
-              symbol: {
-                type: "simple-marker",
-                color: [220, 220, 0, 0.0],
-                outline: {
-                  color: [0, 0, 0, 0],
-                  width: 0
-                }
-              }
-           },
-            {
-              value: "high",
-              symbol: {
-                type: "simple-marker",
-                color: "red",
-                outline: {
-                  color: [0, 0, 0, 0],
-                  width: 0
-                }
+              size: 7,
+              color: [255, 255, 255, 1],
+              outline: {
+                color: [0,0,0,0],
+                width: 0
               }
             },
-            {
-              value: "very-high",
-              symbol: {
-                type: "simple-marker",
-                color: "black",
-                outline: {
-                  color: [0, 0, 0, 0],
-                  width: 0
+            visualVariables: [
+              {
+                type: "color",
+                field: "hue",
+                stops: [
+                  {value: 100, color: [255, 0, 0, 1], label: "High"},
+                  {value: 50, color: [255, 255, 0, 1], label: "Medium"},
+                  {value: 0, color: [0, 180, 0, 1], label: "Low"}
+                ]
               }
-            }
-          }
-        ]
-        }
+            ]
+
+          }        
       });
 
-      viewElement.map.add(testPointsLayer);
+    const asthma_layer = new GeoJSONLayer({
+      url: "http://localhost:5000/asthma-layer",
+      title: "Asthma Prevelance",
+      popupTemplate: {
+        title: "{name}",
+        content: "This is a test point from the Flask backend."
+      },
+      renderer: {
+          type: "simple",
+          symbol: {
+            type: "simple-marker",
+            size: 7,
+            color: [255, 255, 255, 1],
+            outline: {
+              color: [0,0,0,0],
+              width: 0
+            }
+          },
+          visualVariables: [
+            {
+              type: "color",
+              field: "hue",
+              stops: [
+                {value: 100, color: [255, 0, 0, 1], label: "High"},
+                {value: 50, color: [255, 255, 0, 1], label: "Medium"},
+                {value: 0, color: [0, 180, 0, 1], label: "Low"}
+              ]
+            }
+          ]
+
+        }        
+    });
+
+
+      
+
+      viewElement.map.add(cancer_layer);
+      viewElement.map.add(asthma_layer)
 
       // Wait for the layer to load, then zoom to it
-      await viewElement.whenLayerView(testPointsLayer);
+      await viewElement.whenLayerView(cancer_layer);
+      
+      await viewElement.whenLayerView(asthma_layer);
 
-      if (testPointsLayer.fullExtent) {
-        await viewElement.goTo(testPointsLayer.fullExtent.expand(2), {
+      if (cancer_layer.fullExtent) {
+        await viewElement.goTo(cancer_layer.fullExtent.expand(0), {
+          animate: true,
+          duration: 1500
+        });
+      }
+
+      if (asthma_layer.fullExtent) {
+        await viewElement.goTo(asthma_layer.fullExtent.expand(0), {
           animate: true,
           duration: 1500
         });
