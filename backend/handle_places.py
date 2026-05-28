@@ -63,13 +63,13 @@ def build_feature_layer_object(location_hue_data):
         "features": []
     }
     for feature_point in location_hue_data:
-        prevelance = feature_point['feature_value']
+        prevalence = feature_point['feature_value']
         coords_array = feature_point['coords_array']
         hue = feature_point['hue']
         feature_to_add = {
                 "type": "Feature",
                 "properties": {
-                    "name": f"Prevelance: {str(prevelance)}",
+                    "name": f"Prevalence: {str(prevalence)}",
                     "hue": hue
                     },
                 "geometry": {
@@ -83,7 +83,7 @@ def build_feature_layer_object(location_hue_data):
     print(f'feature object: {feature_layer_structure}')
     return feature_layer_structure
 
-def get_severity_color_cancer_OR(prevelance:float):
+def get_severity_color_cancer_OR(prevalence:float):
     LOW_STRING = 'low'
     MEDIUM_STRING = 'medium'
     HIGH_STRING = 'high'
@@ -91,11 +91,11 @@ def get_severity_color_cancer_OR(prevelance:float):
     GREEN_MAX = 8
     YELLOW_MAX = 11
     RED_MAX = 14
-    if prevelance < GREEN_MAX:
+    if prevalence < GREEN_MAX:
         print("low value returned")
         return LOW_STRING
-    if prevelance < YELLOW_MAX:
+    if prevalence < YELLOW_MAX:
         return MEDIUM_STRING
-    if prevelance < RED_MAX:
+    if prevalence < RED_MAX:
         return HIGH_STRING
     return VERY_HIGH_STRING
